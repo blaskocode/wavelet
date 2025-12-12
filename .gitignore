@@ -37,7 +37,8 @@ static/bundle.js
 esdoc
 pkg
 build
-dist
+# dist - commented out to allow installing from GitHub
+# dist
 
 **/tsconfig.tsbuildinfo
 .rollup.cache
