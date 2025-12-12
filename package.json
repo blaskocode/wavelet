@@ -1,9 +1,10 @@
 {
-  "name": "workspace",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "private": true,
+  "name": "@ryohey/wavelet",
+  "version": "0.7.5",
+  "description": "A wavetable synthesizer that never stops the UI thread created by AudioWorklet.",
+  "main": "lib/dist/index.js",
+  "types": "lib/dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "start": "concurrently \"npm run start:lib\" \"npm run start:example\"",
     "start:lib": "npm start --workspace=lib",
@@ -12,12 +13,16 @@
     "publish": "npm publish --workspace=lib",
     "test": "npm run test --workspace=lib"
   },
-  "author": "",
+  "author": "ryohey",
   "license": "MIT",
   "workspaces": [
     "lib",
     "example"
   ],
+  "dependencies": {
+    "@ryohey/sf2parser": "^1.2.1",
+    "midifile-ts": "^1.5.1"
+  },
   "devDependencies": {
     "concurrently": "^9.0.0"
   }
