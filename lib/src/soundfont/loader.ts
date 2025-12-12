@@ -34,6 +34,12 @@ const parseSamplesFromSoundFont = (data: Uint8Array) => {
       return cached
     }
 
+    // Bounds check for sampleID
+    if (sampleID < 0 || sampleID >= parsed.samples.length) {
+      console.warn(`Cannot load sample ${sampleID}: index out of bounds (valid range: 0-${parsed.samples.length - 1})`)
+      return new Float32Array(0)
+    }
+
     const sample = parsed.samples[sampleID]
     const audioData = new Float32Array(sample.length)
     for (let i = 0; i < sample.length; i++) {
@@ -61,6 +67,15 @@ const parseSamplesFromSoundFont = (data: Uint8Array) => {
 
       for (const zone of instrumentZones.zones) {
         const sampleID = zone.sampleID!
+
+        // Bounds check for sampleID before accessing sampleHeaders and samples
+        if (sampleID < 0 || sampleID >= parsed.sampleHeaders.length || sampleID >= parsed.samples.length) {
+          console.warn(
+            `Skipping zone with invalid sampleID ${sampleID} (valid range: 0-${Math.min(parsed.sampleHeaders.length, parsed.samples.length) - 1})`
+          )
+          continue
+        }
+
         const sampleHeader = parsed.sampleHeaders[sampleID]
 
         const { velRange: defaultVelRange, ...generatorDefault } =
