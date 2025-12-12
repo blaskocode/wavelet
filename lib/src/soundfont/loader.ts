@@ -63,6 +63,15 @@ const parseSamplesFromSoundFont = (data: Uint8Array) => {
       }
 
       const instrumentID = presetZone.instrument
+
+      // Bounds check for instrumentID before accessing instruments array
+      if (instrumentID === undefined || instrumentID < 0 || instrumentID >= parsed.instruments.length) {
+        console.warn(
+          `Skipping preset zone with invalid instrumentID ${instrumentID} (valid range: 0-${parsed.instruments.length - 1})`
+        )
+        continue
+      }
+
       const instrumentZones = getInstrumentZones(parsed, instrumentID)
 
       for (const zone of instrumentZones.zones) {
